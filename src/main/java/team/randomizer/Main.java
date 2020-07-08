@@ -5,7 +5,10 @@ import java.util.Properties;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import team.randomizer.listener.GetRankListener;
+import team.randomizer.listener.HelpListener;
 import team.randomizer.listener.RandomizeListener;
+import team.randomizer.listener.SetRankListener;
 
 public class Main {
 	
@@ -20,6 +23,9 @@ public class Main {
 	    
 		// Setup listeners
 		api.addEventListener(new RandomizeListener());
+		api.addEventListener(new SetRankListener());
+		api.addEventListener(new GetRankListener());
+		api.addEventListener(new HelpListener());
 	}
 	
 }
