@@ -66,7 +66,7 @@ public class RankDataService {
 		
 		if (guildObj == null) { // guild not found
 			System.out.println("DEBUG: Guild not found");
-			return null;
+			return rankMap;
 		}
 				
 		JSONArray usersList = (JSONArray) guildObj.get("users");
