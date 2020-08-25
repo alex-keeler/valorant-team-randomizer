@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import team.randomizer.rank.Rank;
 import team.randomizer.rank.RankDataService;
+import team.randomizer.util.MemberUtil;
 
 public class GetRankListener extends ListenerAdapter {
 
@@ -73,7 +74,7 @@ public class GetRankListener extends ListenerAdapter {
 			}
 
 			for (Map.Entry<String, Rank> rankEntry : userRankMap.entrySet()) {
-				Member member = guild.getMemberById(rankEntry.getKey());
+				Member member = MemberUtil.getMemberById(rankEntry.getKey(), guild);
 				response += member.getEffectiveName() + " is " + rankEntry.getValue().toString() + ".\n";
 			}
 

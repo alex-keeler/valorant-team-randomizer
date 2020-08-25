@@ -91,7 +91,7 @@ public class RankDataService {
 				rank = Rank.valueOf(rankStr);
 			} else {
 				// TODO: Implement once Valorant API is available
-				rank = Rank.IRON_1; // dummy value
+				rank = Rank.UNRATED; // dummy value
 			}
 
 			rankMap.put(userId, rank);
