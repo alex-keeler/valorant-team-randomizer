@@ -1,3 +1,2 @@
-src/main/resources/config.properties
-target/classes/config.properties
+/src/main/resources/
 /target/
