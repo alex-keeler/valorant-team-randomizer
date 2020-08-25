@@ -15,11 +15,20 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import net.dv8tion.jda.api.entities.Guild;
+import team.randomizer.util.ApplicationUtil;
 
 public class RankDataService {
 
-	private static final String RANKS_JSON_PATH = "src/main/resources/ranks.json";
-	private static final File ranksFile = new File(RANKS_JSON_PATH);
+	private static final String RANKS_JSON_FILENAME = "ranks.json";
+	private static final String RANKS_JSON_FILEPATH;
+
+	private static final File ranksFile;
+
+	static {
+		String dataDirectory = ApplicationUtil.getResource("data.directory");
+		RANKS_JSON_FILEPATH = String.format("%s/%s", dataDirectory, RANKS_JSON_FILENAME);
+		ranksFile = new File(String.format("%s/%s", dataDirectory, RANKS_JSON_FILENAME));
+	}
 
 	public static Map<String, Rank> getRankData(Guild guild) {
 
@@ -39,7 +48,7 @@ public class RankDataService {
 		JSONObject guildsObj;
 		try {
 			if (ranksFile.length() > 0) {
-				guildsObj = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(RANKS_JSON_PATH)));
+				guildsObj = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(RANKS_JSON_FILEPATH)));
 			} else {
 				guildsObj = null;
 			}
@@ -108,7 +117,7 @@ public class RankDataService {
 		JSONObject guildsObj;
 		try {
 			if (ranksFile.length() > 0) {
-				guildsObj = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(RANKS_JSON_PATH)));
+				guildsObj = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(RANKS_JSON_FILEPATH)));
 			} else {
 				guildsObj = null;
 			}
@@ -137,6 +146,7 @@ public class RankDataService {
 		}
 
 		if (guildObj == null) { // guild not found
+			System.out.printf("Creating guild: {guild_id: %s}\n", guild.getId());
 			guildObj = new JSONObject();
 			guildObj.put("guild_id", guild.getId());
 			guildsList.add(guildObj);
@@ -157,7 +167,7 @@ public class RankDataService {
 			String id = (String) userObj.get("user_id");
 
 			if (userId.equals(id)) { // edit
-				System.out.println("EDIT USER : " + userId + " | " + id);
+				System.out.printf("Updating user: {id: %s, manual: %s, rank: %s}\n", userId, true, rank.toString());
 				userFound = true;
 				userObj.put("manual", true);
 				userObj.put("rank", rank.toString());
@@ -166,6 +176,7 @@ public class RankDataService {
 		}
 
 		if (!userFound) { // add
+			System.out.printf("Creating user: {id: %s, manual: %s, rank: %s}\n", userId, true, rank.toString());
 			JSONObject userObj = new JSONObject();
 			userObj.put("user_id", userId);
 			userObj.put("manual", true);
@@ -174,7 +185,7 @@ public class RankDataService {
 		}
 
 		try {
-			Writer writer = new FileWriter(RANKS_JSON_PATH);
+			Writer writer = new FileWriter(RANKS_JSON_FILEPATH);
 			guildsObj.writeJSONString(writer);
 			writer.close();
 		} catch (IOException e) {

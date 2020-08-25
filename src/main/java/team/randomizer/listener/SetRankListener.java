@@ -26,8 +26,9 @@ public class SetRankListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 
 		String messageContent = event.getMessage().getContentRaw();
+		String command = messageContent.split(" ")[0];
 
-		if (messageContent.startsWith(SET_RANK_COMMAND)) {
+		if (command.equals(SET_RANK_COMMAND)) {
 			String[] argList = messageContent.split(" ");
 
 			String argErrorStr = "";

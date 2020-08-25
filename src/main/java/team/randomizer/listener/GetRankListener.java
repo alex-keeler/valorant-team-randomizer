@@ -12,9 +12,11 @@ import team.randomizer.rank.RankDataService;
 
 public class GetRankListener extends ListenerAdapter {
 
-	public static final String GET_RANK_COMMAND = "!rank";
+	public static final String GET_RANK_COMMAND = "!getrank";
+	public static final String GET_RANK_COMMAND_ALIAS = "!rank";
 	public static final String GET_RANK_COMMAND_USAGE = "<user mention(s)>";
-	public static final String GET_RANKS_COMMAND = "!ranks";
+	public static final String GET_RANKS_COMMAND = "!getranks";
+	public static final String GET_RANKS_COMMAND_ALIAS = "!ranks";
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -26,8 +28,9 @@ public class GetRankListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 
 		String messageContent = event.getMessage().getContentRaw();
+		String command = messageContent.split(" ")[0];
 
-		if (messageContent.split(" ")[0].equals(GET_RANK_COMMAND)) {
+		if (command.equals(GET_RANK_COMMAND) || command.equals(GET_RANK_COMMAND_ALIAS)) {
 
 			List<Member> members = event.getMessage().getMentionedMembers();
 			if (members.isEmpty()) {
@@ -54,7 +57,7 @@ public class GetRankListener extends ListenerAdapter {
 			event.getChannel().sendMessage(response).queue();
 		}
 
-		if (messageContent.split(" ")[0].equals(GET_RANKS_COMMAND)) {
+		if (command.equals(GET_RANKS_COMMAND) || command.equals(GET_RANKS_COMMAND_ALIAS)) {
 
 			Map<String, Rank> userRankMap = RankDataService.getRankData(guild);
 			if (userRankMap == null) {
