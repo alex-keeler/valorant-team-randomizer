@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import team.randomizer.api.ValorantAPIService;
 import team.randomizer.rank.Rank;
 import team.randomizer.rank.RankDataService;
 import team.randomizer.util.MemberUtil;
@@ -39,7 +38,6 @@ public class RandomizeListener extends ListenerAdapter {
 	private static final String START_CODE = ":arrow_forward:";
 
 	private Map<String, Triplet<Boolean, Boolean, List<String>>> lobbyInfoMap = new HashMap<>(); // message id -> (active flag, ranked flag, list of usernames)
-	private final ValorantAPIService valorantApiService = new ValorantAPIService();
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
